@@ -26,6 +26,23 @@ For babashka, you can install this tool with [bbin](https://github.com/babashka/
 bbin install io.github.borkdude/parmezan
 ```
 
+## Emacs integration
+
+Once installed with bbin, you can hook this tool up with Emacs like this:
+
+```
+(defun parmezan ()
+  "Run parmezan on the current buffer."
+  (interactive)
+  (when (buffer-file-name)
+    (save-buffer)
+    (shell-command (format "parmezan --file %s --write"
+                          (shell-quote-argument (buffer-file-name))))
+    (revert-buffer t t t)))
+```
+
+In a file with unbalanced delimiters, you then call `M-x parmezan` to fix it.
+
 ## License
 
 MIT
