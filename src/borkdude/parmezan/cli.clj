@@ -16,9 +16,12 @@
     (throw (ex-info nil {:babashka/exit 1})))
   (let [s (slurp file)
         new-s (parmezan/parmezan s)]
-    (if write
-      (spit file new-s)
-      (println new-s))))
+    (when-not (= s new-s)
+      (if write
+        (spit file new-s)
+        (println new-s))
+      ;; in case of changes, return exit code 1
+      (System/exit 1))))
 
 (defn -main [& args]
   (exec (cli/parse-opts args cli-spec)))
