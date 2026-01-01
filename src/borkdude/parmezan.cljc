@@ -26,7 +26,6 @@
                  (catch #?(:clj clojure.lang.ExceptionInfo
                            :cljs ExceptionInfo) e
                    (if-let [expected-delimiter (:edamame/expected-delimiter (ex-data e))]
-                     ;; Edamame pre https://github.com/borkdude/edamame/issues/136
                      (let [{:keys [row col]} (ex-data e)
                            lines (str/split-lines s)
                            [before-rows after-rows] (split-at (dec row) lines)
